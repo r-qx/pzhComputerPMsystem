@@ -86,7 +86,7 @@ export default {
         return this.$message.error("验证码错误！")
       }else{
         this.$router.push({
-          path:"/home"
+          path:"/dashboard"
         }).catch(err=>{console.log(err)})
       }
     },

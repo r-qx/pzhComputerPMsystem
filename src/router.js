@@ -18,12 +18,40 @@ const router = new VueRouter({
             component:()=>import('@/views/login/login')
         },
         {
-            path: '/home',
-            name: 'home',
-            component: ()=>import('@/views/home/home'),
-            //children: [{ path: '/Home/Material', component: (resolve) => require(['@/views/Material.vue'], resolve) },]
+            path: '/dashboard',
+            alias:"/",
+            meta:{
+              title:"系统总览"
+            },
+            component: ()=>import('@/layout/single'),
+            children:[
+                {
+                    path:"",
+                    name:"dashboard",
+                    meta:{
+                        title:"系统总览"
+                    },
+                    component:()=>import('@/views/dashboard/dashboard')
+                }
+            ]
         },
-
+        {
+            path: '/device',
+            meta:{
+                title:"设备总览"
+            },
+            component: ()=>import('@/layout/single'),
+            children:[
+                {
+                    path:"",
+                    name:"device",
+                    meta:{
+                        title:"设备总览"
+                    },
+                    component:()=>import('@/views/device/device')
+                }
+            ]
+        },
         ]
 });
 
