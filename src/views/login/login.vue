@@ -37,7 +37,7 @@
       >登 录</el-button
       >
       <div class="login__body__foot">
-        <div>注册账号</div>
+        <div @click="signUp">注册账号</div>
       </div>
     </div>
   </div>
@@ -86,9 +86,12 @@ export default {
         return this.$message.error("验证码错误！")
       }else{
         this.$router.push({
-          path:"/Home"
+          path:"/home"
         }).catch(err=>{console.log(err)})
       }
+    },
+    signUp(){
+
     },
     randomNum(min, max) {
       return Math.floor(Math.random() * (max - min) + min);

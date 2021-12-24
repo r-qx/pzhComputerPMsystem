@@ -1,18 +1,16 @@
 <template>
   <div id="app">
-    <router-link></router-link>
-    <login></login>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
 
-import login from "./views/login/login"
+
 export default {
   name: 'App',
-  components: {
-    login
-  }
 }
 </script>
 
