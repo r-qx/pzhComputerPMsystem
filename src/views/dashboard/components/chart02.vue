@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "FFooter.vue",
+  name: "chart02",
 };
 </script>
 

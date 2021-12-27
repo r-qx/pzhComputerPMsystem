@@ -1,13 +1,11 @@
 <template>
-  <div>ftab</div>
+  <div></div>
 </template>
 
 <script>
 export default {
-  name: "FTab"
-}
+  name: "FTab",
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,13 +1,11 @@
 <template>
-  <div>bav</div>
+  <div></div>
 </template>
 
 <script>
 export default {
-  name: "FNav"
-}
+  name: "FNav",
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
