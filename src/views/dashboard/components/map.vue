@@ -19,7 +19,5 @@ export default {
 
 <style lang="less" scoped>
 #map {
-  height: 400px;
-  width: 100px;
 }
 </style>

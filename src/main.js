@@ -3,9 +3,12 @@ import App from "./App.vue";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import router from "@/router";
-Vue.config.productionTip = false;
+import dataV from "@jiaminghi/data-view";
 
+Vue.config.productionTip = false;
+Vue.use(dataV);
 Vue.use(ElementUI);
+
 new Vue({
   render: (h) => h(App),
   router,
