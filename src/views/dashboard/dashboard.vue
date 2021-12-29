@@ -73,6 +73,13 @@ export default {
     display: flex;
     flex-direction: column;
   }
+  .middle {
+    position: absolute;
+    left: 28%;
+    top: 2%;
+    bottom: 2%;
+    right: 28%;
+  }
   .right {
     right: 0;
     width: 25%;
