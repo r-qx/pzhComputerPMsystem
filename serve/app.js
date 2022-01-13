@@ -7,7 +7,8 @@ const cors = require("cors");
 app.use(cors());
 
 //配置解析body表单的中间件
-app.use(express.urlencoded({ extended: false }));
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //res中添加cc方法，用于返回错误对象
 app.use((req, res, next) => {

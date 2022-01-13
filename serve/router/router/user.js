@@ -6,7 +6,9 @@ const user = require("../router_handler/user_handler");
 const expressJoi = require("@escook/express-joi");
 const user_ruler = require("../schema/user");
 
-router.get("/register", expressJoi(user_ruler.user_register), user.register);
-router.get("/login", expressJoi(user_ruler.user_login), user.login);
+const bodyParser = require("body-parser");
+
+router.post("/register", expressJoi(user_ruler.user_register), user.register);
+router.post("/login", user.login);
 
 module.exports = router;

@@ -9,7 +9,10 @@ const joi = require("joi");
  */
 
 const username = joi.string().alphanum().min(1).max(12).required();
-const password = joi.string().pattern(/^[\S]{6,12}$/);
+const password = joi
+  .string()
+  .pattern(/^[\S]{1,12}$/)
+  .required();
 
 exports.user_register = {
   body: {
