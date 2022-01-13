@@ -8,24 +8,30 @@ const config = require("../config");
 const querystring = require("querystring");
 
 exports.register = (req, res) => {
-  const sql = `select * from users where username=?`;
-  db.query(sql, [req.body.username], (err, results) => {
-    if (err) return res.send(res.cc(err));
-    if (results.length > 0) return res.send(res.cc("该用户名已存在"));
-    const addSQL = `insert into users set ?`;
-    const password = bcrypt.hashSync(req.body.password, 10);
-    db.query(
-      addSQL,
-      { username: req.body.username, password: password },
-      (err, results) => {
-        if (err) return res.send(res.cc(err));
-        if (results.affectedRows !== 1) return res.send(res.cc("注册失败"));
-        res.send({
-          message: "注册成功！",
-          status: 1,
-        });
-      }
-    );
+  req.on("data", function (data) {
+    const username = querystring.parse(decodeURIComponent(data)).username;
+    const password1 = querystring.parse(decodeURIComponent(data)).password;
+    const phone = querystring.parse(decodeURIComponent(data)).phone;
+    console.log(phone);
+    const sql = `select * from users where username=?`;
+    db.query(sql, username, (err, results) => {
+      if (err) return res.send(res.cc(err));
+      if (results.length > 0) return res.send(res.cc("该用户名已存在"));
+      const addSQL = `insert into users set ?`;
+      const password = bcrypt.hashSync(password1, 10);
+      db.query(
+        addSQL,
+        { username: username, password: password, phone: phone },
+        (err, results) => {
+          if (err) return res.send(res.cc(err));
+          if (results.affectedRows !== 1) return res.send(res.cc("注册失败"));
+          res.send({
+            message: "注册成功！",
+            status: 1,
+          });
+        }
+      );
+    });
   });
 };
 

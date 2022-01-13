@@ -17,6 +17,11 @@ const router = new VueRouter({
       component: () => import("@/views/login/login"),
     },
     {
+      path: "/register",
+      name: "register",
+      component: () => import("@/views/register/register"),
+    },
+    {
       path: "/dashboard",
       alias: "/",
       meta: {

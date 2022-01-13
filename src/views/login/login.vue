@@ -7,9 +7,10 @@
         ref="form"
         :model="form"
         :rules="rules"
+        :hide-required-asterisk="true"
         label-width="55px"
       >
-        <el-form-item label="账号" prop="id">
+        <el-form-item label="账号" prop="username">
           <el-input v-model="form.username" placeholder="请输入账号"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
@@ -22,10 +23,7 @@
         </el-form-item>
         <el-form-item label="验证码" prop="code">
           <div style="display: flex; justify-content: space-between">
-            <el-input
-              placeholder="请输入验证码"
-              v-model="this.identifyCode"
-            ></el-input>
+            <el-input placeholder="请输入验证码" v-model="form.code"></el-input>
             <div class="code" @click="refreshCode">
               <sidentify
                 :identifyCode="identifyCode"
@@ -71,17 +69,14 @@ export default {
       form: {
         username: "rqx6",
         password: "888888",
+        code: "",
       },
-      code: "",
       rules: {
         username: [
-          {
-            min: 12,
-            max: 12,
-            message: "账号长度为12个字符！",
-            trigger: "blur",
-          },
+          { required: true, message: "请输入用户名", trigger: "blur" },
         ],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        code: [{ required: true, message: "请输入验证码", trigger: "blur" }],
       },
     };
   },
@@ -91,48 +86,55 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (!this.form.username || !this.form.password) {
-        return this.$message.warning("请输入用户名和密码！");
-      }
-      //方便测试，先把验证码填上
-      // if (this.code == "" || this.code == null) {
-      //   return this.$message.warning("请输入验证码！");
-      // }
-      // if (this.code !== this.identifyCode) {
-      //   this.identifyCode = "";
-      //   this.code = "";
-      //   this.makeCode(this.identifyCodes, 4);
-      //   return this.$message.error("验证码错误！");
-      // }
-      else {
-        request({
-          url: "/api/login",
-          data: {
-            username: this.form.username,
-            password: this.form.password,
-          },
-        }).then((data) => {
-          if (data.data.status == 1) {
-            this.$router
-              .push({
-                path: "/dashboard",
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+      this.$refs.form.validate((va) => {
+        if (va) {
+          if (this.form.code == this.identifyCode) {
+            request({
+              url: "/api/login",
+              data: {
+                username: this.form.username,
+                password: this.form.password,
+              },
+            }).then((data) => {
+              if (data.data.status == 1) {
+                this.form.username = "";
+                this.form.password = "";
+                this.form.code = "";
+                this.$message.success("登录成功！");
+                this.$router
+                  .push({
+                    path: "/dashboard",
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              } else {
+                this.$message("账号或密码错误！");
+              }
+            });
           } else {
-            this.$message("账号或密码错误！");
+            this.form.code = "";
+            this.$message.warning("验证码错误！");
           }
-        });
-      }
+        } else {
+          return false;
+        }
+      });
     },
-    signUp() {},
+    signUp() {
+      this.form.username = "";
+      this.form.password = "";
+      this.form.code = "";
+      this.$router.push({
+        path: "/register",
+      });
+    },
     randomNum(min, max) {
       return Math.floor(Math.random() * (max - min) + min);
     },
     refreshCode() {
       this.identifyCode = "";
-      this.code = "";
+      this.form.code = "";
       this.makeCode(this.identifyCodes, 4);
     },
     makeCode(o, l) {
@@ -168,6 +170,7 @@ export default {
     }
     &__foot {
       margin-top: 20px;
+      cursor: pointer;
       display: flex;
       justify-content: center;
     }
