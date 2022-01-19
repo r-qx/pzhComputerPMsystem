@@ -57,3 +57,7 @@ exports.login = (req, res) => {
     });
   });
 };
+
+exports.messageCode = (req, res) => {
+  res.send("ok");
+};

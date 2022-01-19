@@ -9,5 +9,6 @@ const user = require("../router_handler/user_handler");
 
 router.post("/register", user.register);
 router.post("/login", user.login);
+router.post("codeMessage", user.messageCode);
 
 module.exports = router;

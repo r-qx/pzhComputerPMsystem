@@ -35,7 +35,7 @@
         <el-form-item>
           <div style="display: flex; justify-content: space-between">
             <el-checkbox label="记住密码" name="type"></el-checkbox>
-            <span style="color: #57a3f3">忘记密码?</span>
+            <span @click="getPassword" style="color: #57a3f3">忘记密码?</span>
           </div>
         </el-form-item>
       </el-form>
@@ -127,6 +127,14 @@ export default {
       this.form.code = "";
       this.$router.push({
         path: "/register",
+      });
+    },
+    getPassword() {
+      this.form.username = "";
+      this.form.password = "";
+      this.form.code = "";
+      this.$router.push({
+        path: "/password",
       });
     },
     randomNum(min, max) {
